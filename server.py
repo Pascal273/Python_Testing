@@ -26,6 +26,8 @@ def index():
 
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
+    # Issue #1 fixed - the error is caught and handled,
+    # an error message is will be displayed.
     try:
         club = [club for club in clubs if club['email'] == request.form['email']][0]
         return render_template(
