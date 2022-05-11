@@ -1,5 +1,6 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, url_for
+from datetime import datetime
 
 
 def loadClubs():
@@ -48,9 +49,21 @@ def book(competition, club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
-    placesRequired = int(request.form['places'])
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-    flash('Great-booking complete!')
+
+    # Bug #4 fixed - places in past competitions can't be booked,
+    # error-message will be displayed instead of confirmation message.
+    competition_date_obj = datetime.strptime(
+        competition["date"], '%Y-%m-%d %H:%M:%S').date()
+    today_date_obj = datetime.today().date()
+
+    if today_date_obj <= competition_date_obj:
+        placesRequired = int(request.form['places'])
+        competition['numberOfPlaces'] = int(
+            competition['numberOfPlaces']) - placesRequired
+        flash('Great-booking complete!')
+        return render_template(
+            'welcome.html', club=club, competitions=competitions)
+    flash('Sorry, but you cant book places on past competitions.')
     return render_template(
         'welcome.html', club=club, competitions=competitions)
 
