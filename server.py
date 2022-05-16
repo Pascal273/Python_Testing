@@ -61,7 +61,7 @@ def purchasePlaces():
             'welcome.html', club=club, competitions=competitions)
     flash("Your club doesn't have enough points")
     return render_template(
-        'welcome.html', club=club, competitions=competitions)
+        'booking.html', club=club, competition=competition)
 
 
 # TODO: Add route for points display
