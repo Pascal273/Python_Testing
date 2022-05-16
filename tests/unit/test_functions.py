@@ -3,9 +3,9 @@ from server import app, competitions, clubs
 
 def test_purchasePlaces():
     """
-    GIVEN a secretary who wants to book places in a competition
-    WHEN he tries to book x number of places
-    THEN he should not be able to use more than their points allowed
+    GIVEN a secretary who tries to book places in a competition
+    WHEN he tries to book more than 12 places in one competition
+    THEN he should not be able to book more than 12 places.
     """
     with app.test_client() as test_client:
         club = clubs[0]
