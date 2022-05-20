@@ -72,6 +72,7 @@ def purchasePlaces():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
     placesAvailable = int(competition['numberOfPlaces'])
+    pointsRequired = placesRequired * POINTS_PER_PLACE
 
     # Bug #3 fixed - the max number of places to book, is either 12,
     if placesRequired <= MAX_ALLOWED_TO_BOOK:
@@ -79,17 +80,18 @@ def purchasePlaces():
         if placesRequired <= placesAvailable:
             # Bug #2 fixed - max number of points to use to book places
             # equals the available points of the club
-            if int(club['points']) >= placesRequired:
+            if int(club['points']) >= pointsRequired:
                 competition['numberOfPlaces'] = int(
                     competition['numberOfPlaces']) - placesRequired
                 # Issue #5 fixed - deduct and reflect used points
                 # after successful booking of places
-                club['points'] = int(club['points']) - placesRequired
+                club['points'] = int(club['points']) - pointsRequired
                 flash('Great-booking complete!')
                 return render_template(
                     'welcome.html', club=club, competitions=competitions)
 
-            flash("Your club doesn't have enough points")
+            flash(f"Your club doesn't have enough points "
+                  f"({POINTS_PER_PLACE} points per place are required.)")
             return render_template(
                 'booking.html', club=club, competition=competition)
 

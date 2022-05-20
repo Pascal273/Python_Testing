@@ -6,16 +6,15 @@
 </head>
 <body>
     <h2>{{competition['name']}}</h2>
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
     Places available: {{competition['numberOfPlaces']}}
     <form action="/purchasePlaces" method="post">
         <input type="hidden" name="club" value="{{club['name']}}">
         <input type="hidden" name="competition" value="{{competition['name']}}">
         <label for="places">How many places?</label>
-        {# Bug #2 and #3 fixed - the max number of places to book,
-        is the smallest of 12, the club points or the available places left! #}
-        <input type="number" name="places" id="" min="1" max="{{
-                [competition['numberOfPlaces']|int, club['points']|int , 12]|min
-                }}"/>
+        <input type="number" name="places" id="" min="1"/>
         <button type="submit">Book</button>
     </form>
 
