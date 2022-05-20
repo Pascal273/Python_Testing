@@ -98,7 +98,6 @@ def purchasePlaces():
             'booking.html', club=club, competition=competition)
 
 
-# TODO: Add route for points display
 @app.route('/points')
 def displayPoints():
     clubs_by_points = sorted(clubs, key=lambda x: int(x['points']), reverse=True)
