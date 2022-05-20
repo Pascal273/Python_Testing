@@ -13,7 +13,7 @@ def test_index():
         assert response.status_code == 200
 
 
-def test_showSummary():
+def test_unknown_email_response():
     """
     GIVEN an email was entered on the index page to register,
     WHEN the '/showSummary' page is posted to (POST),
