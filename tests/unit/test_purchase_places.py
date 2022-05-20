@@ -1,7 +1,7 @@
 from server import app, competitions, clubs
 
 
-def test_purchasePlaces():
+def test_max_limit_or_available():
     """
     GIVEN a secretary who tries to book places in a competition
     WHEN he tries to book more than 12 places in one competition
