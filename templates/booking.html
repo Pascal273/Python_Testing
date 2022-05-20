@@ -6,24 +6,13 @@
 </head>
 <body>
     <h2>{{competition['name']}}</h2>
-
-    {% with messages = get_flashed_messages()%}
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-       </ul>
-    {% endif%}
-    {%endwith%}
-
     Places available: {{competition['numberOfPlaces']}}
     <form action="/purchasePlaces" method="post">
         <input type="hidden" name="club" value="{{club['name']}}">
         <input type="hidden" name="competition" value="{{competition['name']}}">
         <label for="places">How many places?</label>
-        {# Bug #2 fixed - max number of points to use to book places equals to the points of the club #}
-        <input type="number" name="places" id="" min="1" max="{{club['points']}}"/>
+        {# Bug #2 and #3 fixed - the max number of places to book, is the smallest of 12, the club points or the available places left! #}
+        <input type="number" name="places" id="" min="1" max="{{[competition['numberOfPlaces']|int, club['points']|int , 12]|min}}"/>
         <button type="submit">Book</button>
     </form>
 </body>
