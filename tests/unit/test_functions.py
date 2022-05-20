@@ -1,6 +1,7 @@
 from server import app, competitions, clubs
 
 
+<<<<<<< HEAD
 def test_index():
     """
     GIVEN an email was entered on the index page to register,
@@ -29,3 +30,30 @@ def test_showSummary():
         )
         assert known_email_response.status_code == 200
         assert unknown_email_response.status_code == 200
+=======
+def test_purchasePlaces():
+    """
+    GIVEN a secretary who wants to book places in a competition
+    WHEN he tries to book x number of places
+    THEN he should not be able to use more than their points allowed
+    """
+    with app.test_client() as test_client:
+        club = clubs[1]
+        competition = competitions[0]
+        url = '/purchasePlaces'
+        enough_points_response = test_client.post(url, data={
+            'club': club['name'],
+            'competition': competition['name'],
+            'places': '4',
+        })
+        assert b'Great-booking complete!' in enough_points_response.data
+        assert enough_points_response.status_code == 200
+
+        not_enough_points_response = test_client.post(url, data={
+            'club': club['name'],
+            'competition': competition['name'],
+            'places': '6',
+        })
+        assert b'Great-booking complete!' not in not_enough_points_response.data
+        assert not_enough_points_response.status_code == 200
+>>>>>>> #2_BUG_Clubs_should_not_be_able_to_use_more_than_their_points_allowed
