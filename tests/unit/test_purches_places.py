@@ -1,7 +1,7 @@
 from server import app, competitions, clubs
 
 
-def test_purchasePlaces():
+def test_max_what_points_allow():
     """
     GIVEN a secretary who wants to book places in a competition
     WHEN he tries to book x number of places
