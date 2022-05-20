@@ -11,6 +11,9 @@ def test_max_what_points_allow():
         club = clubs[1]
         competition = competitions[0]
         url = '/purchasePlaces'
+
+        # Test that booking a number of places that the points can afford
+        # works and the places will be confirmed.
         enough_points_response = test_client.post(url, data={
             'club': club['name'],
             'competition': competition['name'],
@@ -19,6 +22,8 @@ def test_max_what_points_allow():
         assert b'Great-booking complete!' in enough_points_response.data
         assert enough_points_response.status_code == 200
 
+        # Test that booking more places than the points allow is not
+        # possible and the places will not be confirmed.
         not_enough_points_response = test_client.post(url, data={
             'club': club['name'],
             'competition': competition['name'],
