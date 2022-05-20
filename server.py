@@ -2,6 +2,9 @@ import json
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
+MAX_ALLOWED_TO_BOOK = 12
+
+
 def loadClubs():
     with open('clubs.json') as c:
          listOfClubs = json.load(c)['clubs']
@@ -54,34 +57,30 @@ def book(competition, club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
-    allowedToBook = 12
-    placesAvailable = int(competition['numberOfPlaces'])
     placesRequired = int(request.form['places'])
+    placesAvailable = int(competition['numberOfPlaces'])
 
-    # Bug #2 fixed - max number of points to use to book places
-    # equals the available points of the club
-    if int(club['points']) >= placesRequired:
-        competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-        # deduct redeemed points after successful booking of places
-        club['points'] = int(club['points']) - placesRequired
-        flash('Great-booking complete!')
-        return render_template(
-            'welcome.html', club=club, competitions=competitions)
-    flash("Your club doesn't have enough points")
-    return render_template(
-        'booking.html', club=club, competition=competition)
-    # Bug #3 fixed - the max number of places to book, is either 12 or,
-    # if smaller, the available places left!
-    if placesRequired <= allowedToBook:
+    # Bug #3 fixed - the max number of places to book, is either 12,
+    if placesRequired <= MAX_ALLOWED_TO_BOOK:
+        # or if smaller, the available places left.
         if placesRequired <= placesAvailable:
-            competition['numberOfPlaces'] = placesAvailable - placesRequired
-            flash('Great-booking complete!')
+            # Bug #2 fixed - max number of points to use to book places
+            # equals the available points of the club
+            if int(club['points']) >= placesRequired:
+                competition['numberOfPlaces'] = int(
+                    competition['numberOfPlaces']) - placesRequired
+                # deduct redeemed points after successful booking of places
+                club['points'] = int(club['points']) - placesRequired
+                flash('Great-booking complete!')
+                return render_template(
+                    'welcome.html', club=club, competitions=competitions)
+            flash("Your club doesn't have enough points")
             return render_template(
-                'welcome.html', club=club, competitions=competitions)
+                'booking.html', club=club, competition=competition)
         flash(f'{competition["name"]} has only {placesAvailable} places left.')
         return render_template(
             'booking.html', club=club, competition=competition)
-    flash(f'Sorry, its not allowed to book more than {allowedToBook} places.')
+    flash(f'Sorry, its not allowed to book more than {MAX_ALLOWED_TO_BOOK} places.')
     return render_template(
             'booking.html', club=club, competition=competition)
 
