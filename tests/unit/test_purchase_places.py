@@ -1,8 +1,7 @@
 from server import app, competitions, clubs
-from pprint import pprint
 
 
-def test_purchasePlaces():
+def test_deducted_points():
     """
     GIVEN a secretary wishes to redeem points for a place in a competition
     WHEN The number of places is confirmed.
