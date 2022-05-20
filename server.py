@@ -81,7 +81,8 @@ def purchasePlaces():
             if int(club['points']) >= placesRequired:
                 competition['numberOfPlaces'] = int(
                     competition['numberOfPlaces']) - placesRequired
-                # deduct redeemed points after successful booking of places
+                # Issue #5 fixed - deduct and reflect used points
+                # after successful booking of places
                 club['points'] = int(club['points']) - placesRequired
                 flash('Great-booking complete!')
                 return render_template(
