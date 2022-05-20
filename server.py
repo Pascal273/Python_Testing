@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 MAX_ALLOWED_TO_BOOK = 12
+POINTS_PER_PLACE = 3
 
 
 def loadClubs():
@@ -87,12 +88,15 @@ def purchasePlaces():
                 flash('Great-booking complete!')
                 return render_template(
                     'welcome.html', club=club, competitions=competitions)
+
             flash("Your club doesn't have enough points")
             return render_template(
                 'booking.html', club=club, competition=competition)
+
         flash(f'{competition["name"]} has only {placesAvailable} places left.')
         return render_template(
             'booking.html', club=club, competition=competition)
+
     flash(f'Sorry, its not allowed to book more than {MAX_ALLOWED_TO_BOOK} places.')
     return render_template(
             'booking.html', club=club, competition=competition)
