@@ -1,7 +1,6 @@
 from server import app, competitions, clubs
 
 
-<<<<<<< HEAD
 def test_index():
     """
     GIVEN an email was entered on the index page to register,
@@ -30,7 +29,8 @@ def test_showSummary():
         )
         assert known_email_response.status_code == 200
         assert unknown_email_response.status_code == 200
-=======
+
+
 def test_purchasePlaces():
     """
     GIVEN a secretary who wants to book places in a competition
@@ -56,4 +56,3 @@ def test_purchasePlaces():
         })
         assert b'Great-booking complete!' not in not_enough_points_response.data
         assert not_enough_points_response.status_code == 200
->>>>>>> #2_BUG_Clubs_should_not_be_able_to_use_more_than_their_points_allowed
