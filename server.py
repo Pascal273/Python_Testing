@@ -90,7 +90,7 @@ def purchasePlaces():
                 return render_template(
                     'welcome.html', club=club, competitions=competitions)
 
-            flash(f"Your club doesn't have enough points "
+            flash(f"Your club does not have enough points."
                   f"({POINTS_PER_PLACE} points per place are required.)")
             return render_template(
                 'booking.html', club=club, competition=competition)
