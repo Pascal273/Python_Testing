@@ -21,7 +21,6 @@ def test_book_past_competitions():
 
         url_valid_comp = f'book/{valid_comp["name"]}/{club["name"]}'
         valid_comp_response = test_client.get(url_valid_comp)
-        print(valid_comp_response.data)
         confirm = f'<title>Booking for {valid_comp["name"]} || GUDLFT</title>'
         assert bytes(confirm, 'utf-8') in valid_comp_response.data
         assert valid_comp_response.status_code == 200

@@ -1,4 +1,4 @@
-from server import app
+from server import app, clubs
 
 
 def test_unknown_email_response():
@@ -9,11 +9,19 @@ def test_unknown_email_response():
     """
 
     with app.test_client() as test_client:
+        club = clubs[0]['email']
         url = "/showSummary"
+
         known_email_response = test_client.post(
-            url, data={'email': 'john@simplylift.co'})
+            url, data={'email': club})
+        header = bytes(f'Welcome, {club}', 'utf-8')
+        assert header in known_email_response.data
+        assert known_email_response.status_code == 200
+
         unknown_email_response = test_client.post(
             url, data={'email': 'unknown@gmail.com'}
         )
-        assert known_email_response.status_code == 200
+        print(unknown_email_response.data)
+        message = b"Sorry, this email could not be found!"
+        assert message in unknown_email_response.data
         assert unknown_email_response.status_code == 200
