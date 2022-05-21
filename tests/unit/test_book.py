@@ -10,10 +10,18 @@ def test_book_past_competitions():
     """
     with app.test_client() as test_client:
         club = clubs[0]
-        competition = competitions[0]
-        url = f'book/{competition["name"]}/{club["name"]}'
-        invalid_comp_response = test_client.get(url)
+        past_comp = competitions[0]
+        valid_comp = competitions[-1]
 
+        url_invalid_comp = f'book/{past_comp["name"]}/{club["name"]}'
+        invalid_comp_response = test_client.get(url_invalid_comp)
         message = b'Sorry, but you cant book places on past competitions.'
         assert message in invalid_comp_response.data
         assert invalid_comp_response.status_code == 200
+
+        url_valid_comp = f'book/{valid_comp["name"]}/{club["name"]}'
+        valid_comp_response = test_client.get(url_valid_comp)
+        print(valid_comp_response.data)
+        confirm = f'<title>Booking for {valid_comp["name"]} || GUDLFT</title>'
+        assert bytes(confirm, 'utf-8') in valid_comp_response.data
+        assert valid_comp_response.status_code == 200

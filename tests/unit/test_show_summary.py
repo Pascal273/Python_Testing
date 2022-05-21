@@ -13,7 +13,7 @@ def test_unknown_email_response():
         known_email_response = test_client.post(
             url, data={'email': 'john@simplylift.co'})
         unknown_email_response = test_client.post(
-            url, data={'email': 'nils@gmail.com'}
+            url, data={'email': 'unknown@gmail.com'}
         )
         assert known_email_response.status_code == 200
         assert unknown_email_response.status_code == 200

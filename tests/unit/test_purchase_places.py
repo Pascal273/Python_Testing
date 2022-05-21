@@ -1,4 +1,5 @@
-from server import app, competitions, clubs, MAX_ALLOWED_TO_BOOK
+from server import app, competitions, clubs, MAX_ALLOWED_TO_BOOK,\
+    POINTS_PER_PLACE
 
 
 def test_max_what_points_allow():
@@ -17,7 +18,7 @@ def test_max_what_points_allow():
         enough_points_response = test_client.post(url, data={
             'club': club['name'],
             'competition': competition['name'],
-            'places': '4',
+            'places': '1',
         })
         assert b'Great-booking complete!' in enough_points_response.data
         assert enough_points_response.status_code == 200
@@ -33,7 +34,7 @@ def test_max_what_points_allow():
         assert not_enough_points_response.status_code == 200
 
 
-def test_purchasePlaces():
+def test_max_to_buy():
     """
     GIVEN a secretary who tries to book places in a competition
     WHEN he tries to book more than 12 places in one competition
@@ -60,7 +61,7 @@ def test_purchasePlaces():
         enough_places_response = test_client.post(url, data={
             'club': club['name'],
             'competition': competition['name'],
-            'places': '6',
+            'places': '1',
         })
         assert b'Great-booking complete!' in enough_places_response.data
         assert enough_places_response.status_code == 200
@@ -96,6 +97,6 @@ def test_deducted_points():
             'places': places,
         })
 
-        correct_result = f'Points available: {points-places}'
+        correct_result = f'Points available: {points-places*POINTS_PER_PLACE}'
         assert bytes(correct_result, 'utf-8') in places_booked_response.data
         assert places_booked_response.status_code == 200
