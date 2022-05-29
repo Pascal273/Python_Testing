@@ -104,7 +104,6 @@ def test_deducted_points():
             'places': to_book,
         })
 
-        print(places_booked_response.data)
         club_result = f'Points available: {points-to_book*POINTS_PER_PLACE}'
         comp_result = f'Number of Places: {places-to_book}'
         assert bytes(club_result, 'utf-8') in places_booked_response.data

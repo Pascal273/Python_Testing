@@ -21,7 +21,6 @@ def test_unknown_email_response():
         unknown_email_response = test_client.post(
             url, data={'email': 'unknown@gmail.com'}
         )
-        print(unknown_email_response.data)
         message = b"Sorry, this email could not be found!"
         assert message in unknown_email_response.data
         assert unknown_email_response.status_code == 200
