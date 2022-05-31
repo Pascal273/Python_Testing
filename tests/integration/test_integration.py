@@ -3,7 +3,9 @@ from server import app, loadClubs, loadCompetitions, POINTS_PER_PLACE
 
 def test_full():
     """
-
+    GIVEN: The gudlift-registration Flask app is running
+    WHEN: every function of this app is executed in sequential order
+    THEN: each function must return the expected response, without any error
     """
     # run loadClubs()
     clubs = loadClubs()
