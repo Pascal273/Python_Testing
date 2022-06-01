@@ -32,7 +32,7 @@ def test_full():
 
         # run book()
         competition = competitions[-1]
-        url_valid_comp = f'book/{competition["name"]}/{club["name"]}'
+        url_valid_comp = f'/book/{competition["name"]}/{club["name"]}'
         valid_comp_response = test_client.get(url_valid_comp)
         confirm = f'<title>Booking for {competition["name"]} || GUDLFT</title>'
         assert bytes(confirm, 'utf-8') in valid_comp_response.data
