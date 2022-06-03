@@ -1,5 +1,8 @@
 name: Run Tests
-on: push
+on:
+  push:
+    branches:
+      - QA_branch
 
 jobs:
   build:
