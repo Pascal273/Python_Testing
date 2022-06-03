@@ -47,21 +47,3 @@ class SecretaryUser(HttpUser):
     @task
     def logout(self):
         self.client.get('/logout', name='/logout')
-
-
-class AnyUser(HttpUser):
-    wait_time = between(0.5, 5)
-
-    @task(2)
-    def landing(self):
-        self.client.get('/', name='/index')
-
-    @task(2)
-    def display_points(self):
-        self.client.get('/points', name='/points')
-
-    @task
-    def show_summary(self):
-        email = 'wrong@email.com'
-        self.client.post(
-            '/showSummary', data={'email': email}, name='/summary')
