@@ -18,7 +18,7 @@ class SecretaryUser(HttpUser):
         self.client.post(
             '/showSummary', data={'email': email}, name='/summary')
 
-    @task(2)
+    @task
     def click_on_book(self):
         club = random.choice(clubs)["name"]
         competition = random.choice(competitions)["name"]
@@ -40,7 +40,7 @@ class SecretaryUser(HttpUser):
             }
         )
 
-    @task(2)
+    @task
     def display_points(self):
         self.client.get('/points', name='/points')
 
