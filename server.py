@@ -34,7 +34,7 @@ def index():
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
     # Issue #1 fixed - the error is caught and handled,
-    # an error message is will be displayed.
+    # an error message will be displayed.
     try:
         club = [club for club in clubs if club['email'] == request.form['email']][0]
         return render_template(
@@ -108,7 +108,11 @@ def purchasePlaces():
 
 @app.route('/points')
 def displayPoints():
-    clubs_by_points = sorted(clubs, key=lambda x: int(x['points']), reverse=True)
+    clubs_by_points = sorted(
+        clubs,
+        key=lambda x: int(x['points']),
+        reverse=True
+    )
     return render_template('points.html', clubs=clubs_by_points)
 
 
