@@ -1,5 +1,4 @@
 import random
-from time import sleep
 from locust import HttpUser, task, between
 
 from server import clubs, competitions
